@@ -10,7 +10,7 @@
     "start": "npm run build && node ./src/dist/index.js",
     "seed": "sequelize db:seed:all --env production",
     "seed-dev": "sequelize db:seed:all --env development",
-    "dev": "nodemon --exec babel-node src/index.js",
+    "dev": "yarn migrate && ./node_modules/.bin/nodemon --exec babel-node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -33,7 +33,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "jsonwebtoken": "^8.5.1",
-    "nodemon": "^1.19.3",
+    "nodemon": "^2.0.12",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^2.0.0",
     "pg": "^7.12.1",
