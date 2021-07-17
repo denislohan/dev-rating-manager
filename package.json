@@ -6,11 +6,11 @@
   "scripts": {
     "build": "rm -rf ./src/dist && babel ./src/. --out-dir ./src/dist --copy-files",
     "migrate": "sequelize db:migrate --env production",
-    "migrate-dev": "sequelize db:migrate && npm run seed-dev --env development",
+    "migrate-dev": "sequelize db:migrate",
     "start": "npm run build && node ./src/dist/index.js",
     "seed": "sequelize db:seed:all --env production",
     "seed-dev": "sequelize db:seed:all --env development",
-    "dev": "yarn migrate && ./node_modules/.bin/nodemon --exec babel-node src/index.js",
+    "dev": "yarn migrate-dev && ./node_modules/.bin/nodemon --exec babel-node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

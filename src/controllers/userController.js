@@ -5,7 +5,7 @@ import UserService from '../services/userService';
 
 const { Op } = Sequelize;
 
-const { findUser, getEngineersIds, getSingleEngineer } = UserService;
+const { findAllUsers, getEngineersByManager, getSingleEngineer } = UserService;
 
 /**
  * @class AuthController
@@ -35,15 +35,22 @@ class UserController {
   }
 
   static async viewAllProfiles(req, res) {
-    let engineerIds;
-    if (req.user.role !== 'LF') return Response.authorizationError(res, 'You do not have access to perform this action');
+    let engineerIds,allUsers;
+    if (req.user.role !== 'Manager') return Response.authorizationError(res, 'You do not have access to perform this action');
 
-    const results = await getEngineersIds(req.user.id);
+    //console.log("id ===>", req.user.id)
+    const results = await getEngineersByManager(req.user.id);
+    //console.log("Engineers===>", results)
 
     // if there is engineers
-    if (results[0].dataValues.engineers.length > 0) {
+
+
+    if (results[0]) {
       engineerIds = results[0].dataValues.engineers;
-      const allUsers = await findUser({ id: { [Op.or]: engineerIds }, role: 'Engineer' });
+      console.log("Engineers", engineerIds)
+      if(engineerIds[0])
+        allUsers = await findAllUsers({ id: { [Op.or]: engineerIds }, role: 'Trainee' });
+
       return Response.customResponse(res, 200, 'success', allUsers);
     }
 
@@ -51,10 +58,13 @@ class UserController {
   }
 
   static async getAllUsers(req, res, next) {
+   // console.log("getting all userrs=====<><><====")
     try {
-      if (req.user.role === 'Engineer') return Response.authorizationError(res, 'You do not have access to perform this action');
+      if (req.user.role === 'Trainee') return Response.authorizationError(res, 'You do not have access to perform this action');
       // if there is engineers
-      const results = await UserService.findUser({});
+      const results = await UserService.findAllUsers({});
+     // console.log('results=======>',results)
+
       return Response.customResponse(res, 200, 'success', results);
     } catch (error) {
       return next(error);

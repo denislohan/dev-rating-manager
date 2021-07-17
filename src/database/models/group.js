@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 module.exports = (sequelize, DataTypes) => {
-  const Group = sequelize.define('Group', {
-    lf: {
+  const group = sequelize.define('group', {
+    manager: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
@@ -13,11 +13,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ARRAY(DataTypes.INTEGER),
     },
   }, {});
-  Group.associate = (models) => {
-    Group.belongsTo(models.User, {
-      foreignKey: 'lf',
+  group.associate = (models) => {
+    group.belongsTo(models.user, {
+      foreignKey: 'manager',
       onDelete: 'CASCADE',
     });
   };
-  return Group;
+  return group;
 };

@@ -1,17 +1,17 @@
 /* eslint-disable no-useless-catch */
 import database from '../database/models';
 
-const { Group } = database;
+const { group } = database;
 
 class EngineerService {
-  static createOrUpdateGroup(lf, engineers) {
-    return Group.findOne({
-      where: { lf },
+  static createOrUpdateGroup(manager, engineers) {
+    return group.findOne({
+      where: { manager },
     }).then((user) => {
       if (!user) {
-        return Group.create({ lf, engineers });
+        return group.create({ manager, engineers });
       }
-      return Group.update({ engineers }, { returning: true, where: { lf } });
+      return group.update({ engineers }, { returning: true, where: { manager } });
     }).catch((error) => { throw error; });
   }
 }

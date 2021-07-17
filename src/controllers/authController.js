@@ -17,6 +17,7 @@ class AuthController {
   static async loginCallback(req, res) {
     try {
       const [dbUser] = await userService.findOrCreateUser(req.user);
+      console.log("done......>>>")
       const user = dbUser.dataValues;
       const token = jwt.sign(user, JWT_SECRET, { expiresIn: '24h' });
       const apiResponse = {

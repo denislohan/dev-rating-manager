@@ -2,9 +2,10 @@ import database from '../database/models';
 import sequelize from 'sequelize';
 import { computeAverage } from "../helpers/index";
 
-const { Rating  } = database;
-const { AverageRatings  } = database;
-const { User  } = database;
+const  Rating   = database.Rating;
+
+const AverageRatings   = database.averageRating;
+const User = database.user;
 class RatingService {
     static async createRating(rating){
         try{

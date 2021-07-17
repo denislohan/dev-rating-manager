@@ -17,9 +17,9 @@ export default class listValidator {
   static async list(req, res, next) {
     const schema = Joi.object({
       engineers: Joi.array()
-        .items(Schema.id)
-        .single()
-        .required()
+        //.items(Schema.id)
+        //.single()
+        //.required()
         .error((errors) => new Error('Array of engineers id is required must be integrs')),
     });
     // validator(schema, req.body, res, next);

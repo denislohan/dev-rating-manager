@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 export default {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('Ratings', [
+    return queryInterface.bulkInsert('ratings', [
       {
         user: 2,
         quality: JSON.stringify({ rate: 2, feedback: 'THis is LF\'s feedback' }),
@@ -71,5 +71,5 @@ export default {
     ], {});
   },
 
-  down: (queryInterface, Sequelize) => queryInterface.bulkDelete('Ratings', null, {}),
+  down: (queryInterface, Sequelize) => queryInterface.bulkDelete('ratings', null, {}),
 };

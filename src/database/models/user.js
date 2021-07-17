@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 
 export default (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
+  const user = sequelize.define('user', {
     googleId: {
       type: DataTypes.STRING,
     },
@@ -24,40 +24,40 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
-      validate: {
-        validateEmail(value) {
-          if (!/^[\w.+\-]+@andela\.com$/i.test(value)) {
-            throw new Error('The email has to be a valid Andela email!');
-          }
-        },
-      },
+      // validate: {
+      //   validateEmail(value) {
+      //     if (!/^[\w.+\-]+@gmail\.com$/i.test(value)) {
+      //       throw new Error('The email has to be a valid google email!');
+      //     }
+      //   },
+      // },
     },
     role: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 'Engineer',
+      defaultValue: 'Trainee',
       validate: {
         isIn: {
           args: [
             [
-              'Engineer',
-              'LF',
-              'Super LF',
+              'Trainee',
+              'Manager',
+              'Lead',
             ],
           ],
           msg:
-            'Role must either be Engineer, LF or Super LF',
+            'Role must either be Engineer, Manager or Lead',
         },
       },
     },
   }, {});
-  User.associate = (models) => {
-    User.hasMany(models.Rating, {
-      foreignKey: 'user',
+  user.associate = (models) => {
+    user.hasMany(models.rating, {
+      foreignKey: 'trainee',
     });
-    User.hasMany(models.Group, {
-      foreignKey: 'lf',
+    user.hasMany(models.group, {
+      foreignKey: 'manager',
     });
   };
-  return User;
+  return user;
 };
