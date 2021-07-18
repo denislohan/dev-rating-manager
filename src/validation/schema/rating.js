@@ -1,7 +1,7 @@
 import Schema from './index';
 
 const ratingBody = {
-    user: Schema.id,
+    trainee: Schema.id,
     quality: Schema.rating
     .error((errors) => new Error(`quality is required and must be object and ${errors}`)),
     quantity: Schema.rating

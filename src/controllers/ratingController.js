@@ -6,13 +6,17 @@ import { computeAverage } from "../helpers/index";
 class RatingController {
 
     async createRatings(req, res, next) {
+        console.log("ratingggggg")
         try {
             //Creates Ratings
             let createdRating = await RatingService.createRating(req.body);
-            const { user } = createdRating;
+            const { trainee } = createdRating;
+
+            console.log("Step 1 User", trainee)
+
 
             //Re-compute average rating
-            RatingService.computeAverage(user);
+            RatingService.computeAverage(trainee);
 
             return Response.customResponse(res, 201, 'Rating created', createdRating);
 
@@ -37,6 +41,8 @@ class RatingController {
             //Get All ratings from average_rating table
             const ratings = await RatingService.getAverage({});
 
+           // console.log("ratings===>", ratings)
+
             return Response.customResponse(res, 200, 'Ratings retrieved successfully', ratings)
         } catch (error) {
             return next(error);
@@ -44,18 +50,21 @@ class RatingController {
     }
 
     async getEngineerRating(req, res, next) {
+        console.log("fetching .... ratings..")
         try {
             const id = req.params.id
 
             //Check if Correct User Id Passed 
             let user = await UserServices.findOneUser({id});
 
-            if(!user || user.role !== 'Engineer') return Response.notFoundError(res, 'Invalid engineer Id passed')
+            console.log("user fetched", user)
+
+            if(!user || user.role !== 'Trainee') return Response.notFoundError(res, 'Invalid engineer Id passed')
             //Get All ratings 
-            let ratings = await RatingService.getRatings({ user: id });
+            let ratings = await RatingService.getRatings({ trainee: id });
 
             //Get Average rating from average_rating Table
-            let average = await RatingService.getAverage({ user: id });
+            let average = await RatingService.getAverage({ trainee: id });
 
             return Response.customResponse(res, 200, 'Ratings retrieved successfully', { average, ratings });
 

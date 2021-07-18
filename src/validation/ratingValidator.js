@@ -9,8 +9,11 @@ class RatingValidator {
          ...ratingBody
         });
         const { error } = schema.validate(req.body);
-        if (error) return Response.validationError(res, `${error}`);
-        next();
+        if (error) {
+
+            console.log(error)
+            
+            return Response.validationError(res, `${error}`)};        next();
     }
 
     static async validateUpdate(req, res, next) {
@@ -19,7 +22,11 @@ class RatingValidator {
          id: Schema.id
         });
         const { error } = schema.validate({ ...req.body, ...req.params });
-        if (error) return Response.validationError(res, `${error}`);
+        if (error) {
+
+            console.log(error)
+            
+            return Response.validationError(res, `${error}`)};
         next();
     }
 }
