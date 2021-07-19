@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 
 export default (sequelize, DataTypes) => {
-  const Rating = sequelize.define('Rating', {
-    user: {
+  const rating = sequelize.define('rating', {
+    trainee: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
@@ -34,11 +34,11 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
     },
   }, {});
-  Rating.associate = (models) => {
-    Rating.belongsTo(models.User, {
-      foreignKey: 'user',
+  rating.associate = (models) => {
+    rating.belongsTo(models.user, {
+      foreignKey: 'trainee',
       onDelete: 'CASCADE',
     });
   };
-  return Rating;
+  return rating;
 };

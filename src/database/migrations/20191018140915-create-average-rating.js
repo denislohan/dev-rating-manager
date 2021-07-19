@@ -1,13 +1,13 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('AverageRatings', {
+    return queryInterface.createTable('averageRatings', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      user: {
+      trainee: {
         type: Sequelize.INTEGER,
       },
       submitter: {
@@ -45,6 +45,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('AverageRatings');
+    return queryInterface.dropTable('averageRatings');
   },
 };

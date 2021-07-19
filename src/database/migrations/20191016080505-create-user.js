@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 export function up(queryInterface, Sequelize) {
-  return queryInterface.createTable('Users', {
+  return queryInterface.createTable('users', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -36,4 +36,4 @@ export function up(queryInterface, Sequelize) {
     },
   });
 }
-export function down(queryInterface, Sequelize) { return queryInterface.dropTable('Users'); }
+export function down(queryInterface, Sequelize) { return queryInterface.dropTable('users'); }

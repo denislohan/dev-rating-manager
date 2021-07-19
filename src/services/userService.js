@@ -2,7 +2,7 @@
 import Sequelize from 'sequelize';
 import database from '../database/models';
 
-const { User } = database;
+const { user,group } = database;
 const { Op } = Sequelize;
 
 /** Class representing user services. */
@@ -13,9 +13,9 @@ class UserService {
    * @param {object} param details of a message.
    * @returns {object} users new message.
    */
-  static async findUser(param) {
+  static async findAllUsers(param) {
     try {
-      const users = await User.findAll({
+      const users = await user.findAll({
         where: param,
       });
       return users;
@@ -31,7 +31,7 @@ class UserService {
    */
   static async findOneUser(param) {
     try {
-      const users = await User.findOne({
+      const users = await user.findOne({
         where: param,
       });
       return users;
@@ -47,7 +47,7 @@ class UserService {
    */
   static async find(param) {
     try {
-      const users = await User.findOne({
+      const users = await user.findOne({
         where: param,
       });
       return users;
@@ -61,13 +61,23 @@ class UserService {
    * @param {object} param details of a message.
    * @returns {object} users new message.
    */
-  static async findOrCreateUser(user) {
+  static async findOrCreateUser(_user) {
     try {
-      const users = await User.findOrCreate({
-        where: { googleId: user.googleId }, defaults: user,
+        const {email} =  _user;
+        if (email.includes('andela.com'))
+        _user['role']='Manager'
+
+            console.log("user", _user);
+
+
+      const users = await user.findOrCreate({
+        where: { googleId: _user.googleId }, defaults: _user,
       });
+
       return users;
     } catch (error) {
+      console.log(error)
+
       throw error;
     }
   }
@@ -79,7 +89,7 @@ class UserService {
    */
   static async updateUser(user, param) {
     try {
-      const users = await User.update(user, {
+      const users = await user.update(user, {
         where: param,
         returning: true,
       });
@@ -92,10 +102,22 @@ class UserService {
   /**
    * @returns {*} users
    */
-  static async getEngineersIds(lfId) {
-    const engineers = await database.Group.findAll({
-      where: { lf: lfId },
+  static async getEngineersByManager(manager) {
+    const groups = await group.findAll({
+      where: { manager },
     });
+
+    return groups;
+  }
+
+  
+
+  /**
+   * @returns {*} users
+   */
+   static async getAllTrainees() {
+    //console.log("manager===>",manager)
+    const engineers = await group.findAll();
 
     return engineers;
   }
@@ -107,7 +129,7 @@ class UserService {
    */
   static async getSingleEngineer(params) {
     try {
-      const user = await database.User.findOne({
+      const user = await database.user.findOne({
         attributes: {
           exclude: ['password'],
         },

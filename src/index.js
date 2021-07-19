@@ -26,6 +26,7 @@ app.get('/', (req, res) => {
   });
 });
 
+
 app.use('/api/v1', routes);
 
 // / catch 404 and forward to error handler

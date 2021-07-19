@@ -24,8 +24,8 @@ class Response {
      * @returns {object}.
      */
   static validationError(res, message) {
-    return res.status(422).json({
-      status: 422,
+    return res.status(423).json({
+      status: 423,
       message,
       error: 'Validation Error',
     });

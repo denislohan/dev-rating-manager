@@ -6,5 +6,5 @@ import listValidator from '../validation/enginnerListValidator';
 import verify from '../middlewares/auth';
 
 const router = express.Router();
-router.patch('/', verify, listValidator.list, groupController.createOrRemove);
+router.post('/', verify, listValidator.list, groupController.createOrRemove);
 export default router;

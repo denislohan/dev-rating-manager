@@ -1,7 +1,7 @@
 
 module.exports = (sequelize, DataTypes) => {
-  const AverageRatings = sequelize.define('AverageRatings', {
-    user: DataTypes.INTEGER,
+  const AverageRating = sequelize.define('averageRating', {
+    trainee: DataTypes.INTEGER,
     submitter: DataTypes.INTEGER,
     quality: DataTypes.DECIMAL,
     quantity: DataTypes.DECIMAL,
@@ -11,11 +11,11 @@ module.exports = (sequelize, DataTypes) => {
     integration: DataTypes.DECIMAL,
     averageRating: DataTypes.DECIMAL,
   }, {});
-  AverageRatings.associate = (models) => {
+  AverageRating.associate = (models) => {
     // associations can be defined here
-    AverageRatings.belongsTo(models.User,{
-      foreignKey: 'user'
+    AverageRating.belongsTo(models.user,{
+      foreignKey: 'trainee'
     })
   };
-  return AverageRatings;
+  return AverageRating;
 };
